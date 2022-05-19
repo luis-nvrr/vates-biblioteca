@@ -5,7 +5,15 @@ import ar.edu.luis.vateslibros.dtos.ModificarLibroRequest;
 import ar.edu.luis.vateslibros.entities.Libro;
 import ar.edu.luis.vateslibros.services.LibroService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -27,7 +35,8 @@ public class LibroController {
     }
 
     @GetMapping(params = {"titulo"})
-    public ResponseEntity<List<Libro>> buscarPorTitulo(@RequestParam String titulo) {
+    public ResponseEntity<List<Libro>> buscarPorTitulo(
+            @RequestParam String titulo) {
         if (titulo.isEmpty()) return ResponseEntity.notFound().build();
         return ResponseEntity.ok(libroService.buscarLibrosPorTitulo(titulo));
     }
@@ -48,7 +57,8 @@ public class LibroController {
     }
 
     @PutMapping("/{id}")
-    public void modificarLibro(@PathVariable Long id, @RequestBody ModificarLibroRequest request) {
+    public void modificarLibro(@PathVariable Long id,
+                               @RequestBody ModificarLibroRequest request) {
         libroService.modificarLibro(id, request);
     }
 

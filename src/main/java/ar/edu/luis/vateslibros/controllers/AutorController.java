@@ -1,7 +1,6 @@
 package ar.edu.luis.vateslibros.controllers;
 
 import ar.edu.luis.vateslibros.dtos.CantidadDeLibrosDeAutorResponse;
-import ar.edu.luis.vateslibros.dtos.CantidadDeLibrosPorAutorResponse;
 import ar.edu.luis.vateslibros.dtos.CrearAutorRequest;
 import ar.edu.luis.vateslibros.dtos.ModificarAutorRequest;
 import ar.edu.luis.vateslibros.entities.Autor;
@@ -9,7 +8,15 @@ import ar.edu.luis.vateslibros.entities.Libro;
 import ar.edu.luis.vateslibros.services.AutorService;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -45,13 +52,6 @@ public class AutorController {
     @DeleteMapping("/{id}")
     public void borrarAutor(@PathVariable long id) {
         autorService.borrarAutor(id);
-    }
-
-    @GetMapping(value="/libros", params = {"contar"})
-    public ResponseEntity<CantidadDeLibrosPorAutorResponse> contarLibrosDeAutores(
-            @RequestParam(required = false) boolean contar) {
-        if(!contar) return ResponseEntity.notFound().build();
-        return ResponseEntity.ok(autorService.contarLibrosPorAutor());
     }
 
     @GetMapping(value="/libros", params = {"nombreAutor"})

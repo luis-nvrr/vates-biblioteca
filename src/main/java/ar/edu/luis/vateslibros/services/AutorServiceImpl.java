@@ -1,7 +1,6 @@
 package ar.edu.luis.vateslibros.services;
 
 import ar.edu.luis.vateslibros.dtos.CantidadDeLibrosDeAutorResponse;
-import ar.edu.luis.vateslibros.dtos.CantidadDeLibrosPorAutorResponse;
 import ar.edu.luis.vateslibros.dtos.CrearAutorRequest;
 import ar.edu.luis.vateslibros.dtos.ModificarAutorRequest;
 import ar.edu.luis.vateslibros.entities.Autor;
@@ -12,9 +11,7 @@ import ar.edu.luis.vateslibros.repositories.AutorRepository;
 import ar.edu.luis.vateslibros.repositories.LibroRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -61,18 +58,6 @@ public class AutorServiceImpl implements AutorService{
                 .orElseThrow(()-> new InvalidAutorException("el autor es invalido"));
         autor.setNombre(request.getNombre());
         autorRepository.save(autor);
-    }
-
-    @Override
-    public CantidadDeLibrosPorAutorResponse contarLibrosPorAutor() {
-        Map<String, Integer> cuenta = new HashMap<>();
-        libroRepository
-                .findAll()
-                .forEach(libro -> {
-                    cuenta.putIfAbsent(libro.buscarNombreAutor(), 0);
-                    cuenta.put(libro.buscarNombreAutor(), cuenta.get(libro.buscarNombreAutor())+1);
-                });
-        return new CantidadDeLibrosPorAutorResponse(cuenta);
     }
 
     @Override
